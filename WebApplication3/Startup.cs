@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.Application;
 using System;
 using System.Collections.Generic;
@@ -27,13 +28,21 @@ namespace WebApplication3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            //GlobalConfiguration.Configuration
-            //        .EnableSwagger(c => c.SingleApiVersion("v1", "A title for your API"))
-            //        .EnableSwaggerUi();
+            services.AddControllers();                        
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Doomkinn.Timesheets", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Doomkinn.Timesheets",
+                    Version = "v1",
+                    Description = "Description for the API goes here.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "doomkinn",
+                        Email = string.Empty,
+                        Url = new Uri("https://coderjony.com/"),
+                    },
+                });
             });
         }
 
@@ -42,10 +51,14 @@ namespace WebApplication3
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Doomkinn.Timesheets v1"));
+                app.UseDeveloperExceptionPage();                
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Doomkinn.Timesheets v1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseHttpsRedirection();
 
