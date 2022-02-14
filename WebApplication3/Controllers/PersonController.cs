@@ -1,83 +1,75 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Doomkinn.Timesheets.Models;
+using Doomkinn.Timesheets.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Doomkinn.Timesheets.Controllers
 {
-    public class PersonController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class PersonController : ControllerBase
     {
-        // GET: PersonController
-        public ActionResult Index()
+        private readonly PersonRepository _repo;
+        public PersonController(PersonRepository personRepository)
         {
-            return View();
+            _repo = personRepository;
         }
-
-        // GET: PersonController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet("persons/{id}")]
+        public IActionResult Get([FromRoute] int id)
         {
-            return View();
-        }
-
-        // GET: PersonController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: PersonController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            var result = _repo.Get(id);
+            if (result != null)
             {
-                return RedirectToAction(nameof(Index));
+                return Ok(result);
             }
-            catch
+            else
             {
-                return View();
+                return BadRequest();
             }
         }
-
-        // GET: PersonController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet("persons")]
+        public IActionResult Get(int skip, int take)
         {
-            return View();
-        }
-
-        // POST: PersonController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
+            var result = _repo.Get(skip, take);
+            if (result != null)
             {
-                return RedirectToAction(nameof(Index));
+                return Ok(result);
             }
-            catch
+            else
             {
-                return View();
+                return BadRequest();
             }
         }
-
-        // GET: PersonController/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet("persons/search")]
+        public IActionResult Get(string searchTerm)
         {
-            return View();
+            var result = _repo.Get(searchTerm);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
-
-        // POST: PersonController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpPost("register")]
+        public IActionResult RegisterPerson([FromBody] Person personRequest)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _repo.Add(personRequest);
+            return Ok();
+        }
+        [HttpPut("persons")]
+        public IActionResult EditPerson([FromBody] Person personRequest)
+        {
+            _repo.Update(personRequest);
+            return Ok();
+        }
+        [HttpDelete("persons/{id}")]
+        public IActionResult DeletePerson([FromRoute] int id)
+        {
+            _repo.Delete(id);
+            return Ok();
         }
     }
 }

@@ -59,12 +59,28 @@ namespace Doomkinn.Timesheets.Repository
                 new Person { Id = 47, FirstName = "Alana", LastName = "Madden", Email = "at.velit.Cras@aptenttacitisociosqu.net", Company = "Euismod Est Arcu Institute", Age = 33 },
                 new Person { Id = 48, FirstName = "Salvador", LastName = "Cohen", Email = "magna.Duis@Phasellus.org", Company = "Purus PC", Age = 37 },
                 new Person { Id = 49, FirstName = "Jenette", LastName = "Dejesus", Email = "adipiscing.Mauris.molestie@liberoduinec.ca", Company = "Lectus Justo Incorporated", Age = 56 },
-                new Person { Id = 50, FirstName = "Ramona", LastName = "Gilliam", Email = "massa.Vestibulum@lectuspede.ca", Company = "Imperdiet Dictum LLP", Age = 24 }
+                new Person { Id = 50, FirstName = "Ramona", LastName = "Gilliam", Email = "massa.Vestibulum@lectuspede.ca", Company = "Imperdiet Dictum LLP", Age = 24 },
+                new Person { Id = 51, FirstName = "Melinda", LastName = "Ellis", Email = "mas.Vbulum@lectuspede.ca", Company = "Imperdiet LLP", Age = 54 }
             };
         }
         public IReadOnlyCollection<Person> Get()
         {
             var q = _dataList.ToArray();
+            return q;
+        }
+        public Person Get(int id)
+        {
+            Person q = _dataList.Find(x => x.Id == id);
+            return q;
+        }
+        public IReadOnlyCollection<Person> Get(int skip, int take)
+        {
+            var res = _dataList.GetRange(skip, take);
+            return res;
+        }
+        public IReadOnlyCollection<Person> Get(string name)
+        {
+            var q = _dataList.FindAll(x => x.FirstName.ToLower() == name.ToLower()).ToArray();
             return q;
         }
         public void Add(Person entity)
@@ -73,12 +89,17 @@ namespace Doomkinn.Timesheets.Repository
         }
         public void Update(Person entity)
         {
-            
+            Get(entity.Id).Email = entity.Email;
+            Get(entity.Id).Id = entity.Id;
+            Get(entity.Id).Age = entity.Age;
+            Get(entity.Id).Company = entity.Company;
+            Get(entity.Id).Email=entity.Email;
+            Get(entity.Id).FirstName = entity.FirstName;
+            Get(entity.Id).LastName = entity.LastName;            
         }
-
         public void Delete(int id)
         {
-            
+            _dataList.Remove(Get(id));
         }
     }
 }

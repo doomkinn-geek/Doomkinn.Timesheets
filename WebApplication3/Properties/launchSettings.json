@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "WebApplication3": {
+    "Doomkinn.Timesheets": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "",
