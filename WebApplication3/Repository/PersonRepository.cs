@@ -89,13 +89,13 @@ namespace Doomkinn.Timesheets.Repository
         }
         public void Update(Person entity)
         {
-            Get(entity.Id).Email = entity.Email;
-            Get(entity.Id).Id = entity.Id;
-            Get(entity.Id).Age = entity.Age;
-            Get(entity.Id).Company = entity.Company;
-            Get(entity.Id).Email=entity.Email;
-            Get(entity.Id).FirstName = entity.FirstName;
-            Get(entity.Id).LastName = entity.LastName;            
+            Person toEdit = Get(entity.Id);
+            toEdit.Email = entity.Email;
+            toEdit.Age = entity.Age;
+            toEdit.Company = entity.Company;
+            toEdit.Email=entity.Email;
+            toEdit.FirstName = entity.FirstName;
+            toEdit.LastName = entity.LastName;            
         }
         public void Delete(int id)
         {
