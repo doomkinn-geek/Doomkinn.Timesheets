@@ -2,6 +2,7 @@
 using Doomkinn.Timesheets.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Doomkinn.Timesheets.Controllers
 {
@@ -9,11 +10,14 @@ namespace Doomkinn.Timesheets.Controllers
     [Route("[controller]")]
     public class PersonController : ControllerBase
     {
-        private readonly PersonRepository _repo;
+        private readonly IPersonRepository _repo;
         public PersonController(PersonRepository personRepository)
         {
             _repo = personRepository;
         }
+        //В комментарии в пул реквесте вы писали:
+        //"ActionResult параметризарованный более наглядно выглядит"
+        //не совсем понял. Поясните, пожалуйста
         [HttpGet("persons/{id}")]
         public IActionResult Get([FromRoute] int id)
         {
@@ -24,7 +28,7 @@ namespace Doomkinn.Timesheets.Controllers
             }
             else
             {
-                return BadRequest();
+                return NotFound();
             }
         }
         [HttpGet("persons")]
@@ -37,7 +41,8 @@ namespace Doomkinn.Timesheets.Controllers
             }
             else
             {
-                return BadRequest();
+                List<Person> people = new List<Person>();
+                return Ok(people);
             }
         }
         [HttpGet("persons/search")]
@@ -50,26 +55,48 @@ namespace Doomkinn.Timesheets.Controllers
             }
             else
             {
-                return BadRequest();
+                List<Person> people = new List<Person>();
+                return Ok(people);
             }
         }
         [HttpPost("register")]
         public IActionResult RegisterPerson([FromBody] Person personRequest)
         {
-            _repo.Add(personRequest);
-            return Ok();
+            if(_repo.Add(personRequest) != null)
+            { 
+                return Ok(); 
+            }
+            else
+            {
+                return BadRequest("Запись с данным ID уже существует. Измените запрос");
+            }            
         }
         [HttpPut("persons")]
         public IActionResult EditPerson([FromBody] Person personRequest)
         {
-            _repo.Update(personRequest);
-            return Ok();
+            if (_repo.Get(personRequest.Id) != null)
+            {
+                _repo.Update(personRequest);
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+            
         }
         [HttpDelete("persons/{id}")]
         public IActionResult DeletePerson([FromRoute] int id)
         {
-            _repo.Delete(id);
-            return Ok();
+            if (_repo.Get(id) != null)
+            {
+                _repo.Delete(id);
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }

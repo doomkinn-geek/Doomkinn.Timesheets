@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Doomkinn.Timesheets.Repository
 {
-    public class PersonRepository
+    public class PersonRepository : IPersonRepository
     {
         List<Person> _dataList;
         public PersonRepository()
@@ -83,9 +83,17 @@ namespace Doomkinn.Timesheets.Repository
             var q = _dataList.FindAll(x => x.FirstName.ToLower() == name.ToLower()).ToArray();
             return q;
         }
-        public void Add(Person entity)
+        public Person Add(Person entity)
         {
-            _dataList.Add(entity);
+            if (this.Get(entity.Id) == null)
+            {
+                _dataList.Add(entity);
+                return entity;
+            }
+            else
+            {
+                return null;
+            }
         }
         public void Update(Person entity)
         {
