@@ -1,5 +1,5 @@
 ﻿using Doomkinn.Timesheets.Models;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Doomkinn.Timesheets.Data.DB
 {
@@ -7,13 +7,11 @@ namespace Doomkinn.Timesheets.Data.DB
     {
         public DbSet<Employee> Employees { get; set; }
         public DbSet<User> Users { get; set; }
-        public DataDBContext(string connectionString):base(connectionString)  
-        {
-        }
-
+        public DataDBContext(DbContextOptions options) : base(options) {}        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Employee>().Ignore(x => x.Comment);
+            modelBuilder.Entity<User>().Ignore(x => x.Comment);
         }
     }
 }
