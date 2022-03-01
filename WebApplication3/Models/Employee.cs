@@ -6,6 +6,7 @@ namespace Doomkinn.Timesheets.Models
     public sealed class Employee
     {
         public int Id { get; set; }
+        public bool IsDeleted { get; set; }
         public string Comment { get; set; }
         public string EmployeeName { get; set; }
         public string Address { get; set; }

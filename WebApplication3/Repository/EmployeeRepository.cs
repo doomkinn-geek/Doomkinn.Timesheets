@@ -7,31 +7,31 @@ using System.Threading.Tasks;
 
 namespace Doomkinn.Timesheets.Repository
 {
-    public sealed class UserRepository
+    public class EmployeeRepository
     {
         private readonly DataDBContext _context;
-        public UserRepository(DataDBContext context)
+        public EmployeeRepository(DataDBContext context)
         {
             _context = context;
         }
-        public async Task Add(User entity)
+        public async Task Add(Employee entity)
         {
-            _context.Users.Add(entity);
+            _context.Employees.Add(entity);
             await _context.SaveChangesAsync();
         }
-        public async Task<IReadOnlyCollection<User>> Get()
+        public async Task<IReadOnlyCollection<Employee>> Get()
         {
-            var result = await _context.Users.Where(x => x.IsDeleted == false).ToListAsync();
+            var result = await _context.Employees.Where(x => x.IsDeleted == false).ToListAsync();
             return result;
         }
-        public async Task Update(User entity)
+        public async Task Update(Employee entity)
         {
             _context.Update(entity);
             await _context.SaveChangesAsync();
         }
         public async void Delete(int id)
         {
-            var entity = _context.Users.Find(id);
+            var entity = _context.Employees.Find(id);
             entity.IsDeleted = true;
             await _context.SaveChangesAsync();
         }
