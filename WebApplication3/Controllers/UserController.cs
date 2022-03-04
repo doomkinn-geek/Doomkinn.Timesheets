@@ -12,141 +12,37 @@ using Doomkinn.Timesheets.Repository;
 namespace Doomkinn.Timesheets.Controllers
 {
     public class UserController : Controller
-    {
-        private readonly DataDBContext _context;
+    {        
         private readonly UserRepository _repo;
 
-        public UserController(DataDBContext context, UserRepository repo)
-        {
-            _context = context;
+        public UserController(UserRepository repo)
+        {     
             _repo = repo;
         }
-
-        // GET: UserController
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<ActionResult<User>> GetAll()
         {
-            return View(await _repo.Get());
+            var res = await _repo.Get();
+            return Ok(res);
         }
-
-        // GET: UserController/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
-
-        // GET: UserController/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: UserController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IsDeleted,FirstName,LastName,MiddleName")] User user)
+        public async Task<ActionResult> Create([FromBody] User user)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(user);
+            await _repo.Add(user);
+            return NoContent();
         }
-
-        // GET: UserController/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [HttpPut]
+        public async Task<ActionResult> Update([FromBody] User newUser)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return View(user);
+            await _repo.Update(newUser);
+            return NoContent();
         }
-
-        // POST: UserController/Edit/5        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IsDeleted,FirstName,LastName,MiddleName")] User user)
+        [HttpDelete]
+        [Route("{userId}")]
+        public async Task<ActionResult> Delete(int userId)
         {
-            if (id != user.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(user);
-        }
-
-        // GET: UserController/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
-
-        // POST: UserController/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool UserExists(int id)
-        {
-            return _context.Users.Any(e => e.Id == id);
+            await _repo.Delete(userId);
+            return NoContent();
         }
     }
 }

@@ -32,6 +32,8 @@ namespace WebApplication3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<PersonRepository>();
+            services.AddSingleton<UserRepository>();
+            services.AddSingleton<EmployeeRepository>();
             services.AddControllers();                        
             services.AddSwaggerGen(c =>
             {
