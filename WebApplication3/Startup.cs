@@ -30,11 +30,7 @@ namespace WebApplication3
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddSingleton<PersonRepository>();
-            services.AddSingleton<UserRepository>();
-            services.AddSingleton<EmployeeRepository>();
-            services.AddControllers();                        
+        {            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -50,8 +46,15 @@ namespace WebApplication3
                     },
                 });
             });
-            services.AddDbContext<DataDBContext>(options => options.UseSqlite(@"Data Source=C:\Doomkinn.Timesheets.db;"));
+            var connectionString = Configuration.GetConnectionString("TestDb");
+            services.AddDbContext<DataDBContext>(options => options.UseSqlite(connectionString));
             services.AddScoped<UserRepository>();
+            services.AddScoped<PersonRepository>();
+            services.AddScoped<EmployeeRepository>();
+            /*services.AddSingleton<PersonRepository>();
+            services.AddSingleton<UserRepository>();
+            services.AddSingleton<EmployeeRepository>();*/
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
