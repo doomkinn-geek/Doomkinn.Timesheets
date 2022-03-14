@@ -31,6 +31,9 @@ namespace Doomkinn.Timesheets.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Comment")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("MobileNumber")
                         .HasColumnType("TEXT");
 
@@ -53,6 +56,9 @@ namespace Doomkinn.Timesheets.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT");

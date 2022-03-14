@@ -11,7 +11,9 @@ using Doomkinn.Timesheets.Repository;
 
 namespace Doomkinn.Timesheets.Controllers
 {
-    public class UserController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class UserController : ControllerBase
     {        
         private readonly UserRepository _repo;
 
@@ -19,19 +21,19 @@ namespace Doomkinn.Timesheets.Controllers
         {     
             _repo = repo;
         }
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<ActionResult<User>> GetAll()
         {
             var res = await _repo.Get();
             return Ok(res);
         }
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult> Create([FromBody] User user)
         {
             await _repo.Add(user);
             return NoContent();
         }
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<ActionResult> Update([FromBody] User newUser)
         {
             await _repo.Update(newUser);
