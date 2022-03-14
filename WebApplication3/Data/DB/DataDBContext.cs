@@ -10,8 +10,8 @@ namespace Doomkinn.Timesheets.Data.DB
         public DataDBContext(DbContextOptions options) : base(options) {}        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>().Ignore(x => x.Comment);
-            modelBuilder.Entity<User>().Ignore(x => x.Comment);
+            /*modelBuilder.Entity<Employee>().Ignore(x => x.Comment);
+            modelBuilder.Entity<User>().Ignore(x => x.Comment);*/
         }
     }
 }
