@@ -26,7 +26,15 @@ namespace Doomkinn.Timesheets.Repository
         }
         public async Task Update(Employee entity)
         {
-            _context.Update(entity);
+            var dbEntity = await _context.Employees.FirstOrDefaultAsync(x => x.Id == entity.Id);
+            dbEntity.IsDeleted = entity.IsDeleted;
+            dbEntity.Comment = entity.Comment;
+            dbEntity.EmployeeName = entity.EmployeeName;
+            dbEntity.Address = entity.Address;
+            dbEntity.MobileNumber = entity.MobileNumber;
+            dbEntity.Salary = entity.Salary;
+            dbEntity.Token = entity.Token;
+            _context.Update(dbEntity);
             await _context.SaveChangesAsync();
         }
         public async Task Delete(int id)

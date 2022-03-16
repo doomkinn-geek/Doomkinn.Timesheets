@@ -36,7 +36,6 @@ namespace Doomkinn.Timesheets
                 }
             }
             return string.Empty;
-
         }
 
         private string GenerateJwtToken(int id)
