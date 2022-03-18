@@ -32,8 +32,7 @@ namespace WebApplication3
 
         public IConfiguration Configuration { get; }        
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddSingleton<IUserService, UserService>();
+        {            
             services.AddCors();
             services.AddControllers();
             services.AddAuthentication(x =>
@@ -97,6 +96,7 @@ namespace WebApplication3
             services.AddScoped<UserRepository>();
             services.AddScoped<PersonRepository>();
             services.AddScoped<EmployeeRepository>();
+            services.AddScoped<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

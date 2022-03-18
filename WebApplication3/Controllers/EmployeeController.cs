@@ -1,7 +1,9 @@
 ﻿using Doomkinn.Timesheets.Models;
 using Doomkinn.Timesheets.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Doomkinn.Timesheets.Controllers
@@ -39,6 +41,6 @@ namespace Doomkinn.Timesheets.Controllers
         {
             await _repo.Delete(employeeId);
             return NoContent();
-        }
+        }        
     }
 }

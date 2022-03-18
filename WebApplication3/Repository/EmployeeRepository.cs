@@ -42,6 +42,10 @@ namespace Doomkinn.Timesheets.Repository
             var entity = _context.Employees.Find(id);
             entity.IsDeleted = true;
             await _context.SaveChangesAsync();
+        }        
+        public Employee GetByToken(string token)
+        {
+            return _context.Employees.FirstOrDefault(e => e.Token == token);
         }
     }
 }
