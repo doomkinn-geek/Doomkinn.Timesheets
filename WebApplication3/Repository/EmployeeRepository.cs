@@ -30,7 +30,8 @@ namespace Doomkinn.Timesheets.Repository
             dbEntity.IsDeleted = entity.IsDeleted;
             dbEntity.Comment = entity.Comment;
             dbEntity.EmployeeName = entity.EmployeeName;
-            dbEntity.Address = entity.Address;
+            dbEntity.Email = entity.Email;
+            dbEntity.Age = entity.Age;
             dbEntity.MobileNumber = entity.MobileNumber;
             dbEntity.Salary = entity.Salary;
             dbEntity.Token = entity.Token;
