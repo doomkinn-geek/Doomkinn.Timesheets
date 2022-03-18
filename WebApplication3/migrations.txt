@@ -1,3 +1,4 @@
 ﻿dotnet tool install --global dotnet-ef
 dotnet ef migrations add InitialMigration --project Doomkinn.Timesheets
 dotnet ef database update --project Doomkinn.Timesheets
+Set-Location -Path WebApplication3
