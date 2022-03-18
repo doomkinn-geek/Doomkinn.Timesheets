@@ -1,6 +1,9 @@
-﻿using Doomkinn.Timesheets.Repository;
+﻿using Doomkinn.Timesheets.Models;
+using Doomkinn.Timesheets.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace TimeSheetsTestsProject.UserController
@@ -12,7 +15,7 @@ namespace TimeSheetsTestsProject.UserController
         {
             var mockRepo = new Mock<UserRepository>();
             mockRepo.Setup(repo => repo.Get())
-                .ReturnsAsync(GetTestSessions());
+                .ReturnsAsync(new User());
             var controller = new UserController(mockRepo.Object);
 
             // Act
@@ -20,7 +23,7 @@ namespace TimeSheetsTestsProject.UserController
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<StormSessionViewModel>>(
+            var model = Assert.IsAssignableFrom<IEnumerable<User>>(
                 viewResult.ViewData.Model);
             Assert.Equal(2, model.Count());
         }
