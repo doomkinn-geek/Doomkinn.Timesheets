@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Doomkinn.Timesheets.Models
 {
@@ -6,11 +7,13 @@ namespace Doomkinn.Timesheets.Models
     public sealed class User 
     {
         public int Id { get; set; }
-        public bool IsDeleted { get; set; }
-        public string Comment { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string MiddleName { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        [Required]
+        [StringLength(100)]
+        public string Username { get; set; }
+        [Required]
+        public byte[] PasswordHash { get; set; }
+        public string Token { get; set; }
+        public string Role { get; set; }
     }
-
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Doomkinn.Timesheets.Models
 {
@@ -8,9 +9,12 @@ namespace Doomkinn.Timesheets.Models
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
         public string Comment { get; set; }
+        [Required]
         public string EmployeeName { get; set; }
         public string Address { get; set; }
         public string MobileNumber { get; set; }
+        [Required]
         public decimal Salary { get; set; }
+        public string Token { get; set; }
     }
 }
