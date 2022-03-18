@@ -6,11 +6,10 @@ namespace Doomkinn.Timesheets.Models
     public sealed class User 
     {
         public int Id { get; set; }
-        public bool IsDeleted { get; set; }
-        public string Comment { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string MiddleName { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        public string Username { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public string Token { get; set; }
+        public string Role { get; set; }
     }
-
 }

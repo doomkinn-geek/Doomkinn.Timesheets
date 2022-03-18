@@ -12,5 +12,6 @@ namespace Doomkinn.Timesheets.Models
         public string Address { get; set; }
         public string MobileNumber { get; set; }
         public decimal Salary { get; set; }
+        public string Token { get; set; }
     }
 }

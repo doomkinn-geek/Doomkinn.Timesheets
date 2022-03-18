@@ -29,9 +29,10 @@ namespace Doomkinn.Timesheets.Repository
             var dbEntity = await _context.Users.FirstOrDefaultAsync(x => x.Id == entity.Id);
 
             dbEntity.IsDeleted = entity.IsDeleted;
-            dbEntity.LastName = entity.LastName;
-            dbEntity.FirstName = entity.FirstName;
-            dbEntity.MiddleName = entity.MiddleName;
+            dbEntity.PasswordHash = entity.PasswordHash;
+            dbEntity.Role = entity.Role;
+            dbEntity.Token = entity.Token;
+            dbEntity.Username = entity.Username;
             await _context.SaveChangesAsync();
         }
         public async Task Delete(int id)
