@@ -6,6 +6,7 @@ namespace Doomkinn.Timesheets.Models
     [Table("User", Schema = "Test")]
     public sealed class User 
     {
+        [Required]
         public int Id { get; set; }
         public bool IsDeleted { get; set; } = false;
         [Required]
