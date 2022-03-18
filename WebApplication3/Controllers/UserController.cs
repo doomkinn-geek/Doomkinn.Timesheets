@@ -10,6 +10,7 @@ using Doomkinn.Timesheets.Models;
 using Doomkinn.Timesheets.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
 
 namespace Doomkinn.Timesheets.Controllers
 {
@@ -46,7 +47,7 @@ namespace Doomkinn.Timesheets.Controllers
         }
         [HttpDelete]
         [Route("{userId}")]
-        public async Task<ActionResult> Delete(int userId)
+        public async Task<ActionResult> Delete([Range(1, int.MaxValue)]int userId)
         {
             await _repo.Delete(userId);
             return NoContent();
