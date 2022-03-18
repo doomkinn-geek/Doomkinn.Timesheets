@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Doomkinn.Timesheets.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase
